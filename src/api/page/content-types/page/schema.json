@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Страницы",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "selection": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::section.section",
+      "inversedBy": "page"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "page_content": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "parents_page": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "inversedBy": "children_pages"
+    },
+    "children_pages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::page.page",
+      "mappedBy": "parents_page"
+    }
+  }
+}

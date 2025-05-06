@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "content_tag",
+  "info": {
+    "singularName": "content-tags",
+    "pluralName": "content-tag",
+    "displayName": "Теги контента"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "content_tag": {
+      "type": "string"
+    },
+    "news": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::new.new",
+      "mappedBy": "content_tag"
+    }
+  }
+}

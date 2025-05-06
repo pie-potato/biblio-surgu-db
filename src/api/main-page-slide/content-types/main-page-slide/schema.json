@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "main_page_slides",
+  "info": {
+    "singularName": "main-page-slide",
+    "pluralName": "main-page-slides",
+    "displayName": "Слайды главной страницы"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "main_page_slide_picture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

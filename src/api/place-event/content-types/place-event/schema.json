@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "places_event",
+  "info": {
+    "singularName": "place-event",
+    "pluralName": "places-event",
+    "displayName": "Место проведения мероприятия",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "photos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::events.events",
+      "mappedBy": "event_place"
+    }
+  }
+}
