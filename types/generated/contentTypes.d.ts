@@ -398,39 +398,41 @@ export interface ApiContentTagsContentTags extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiEventsEvents extends Struct.CollectionTypeSchema {
-  collectionName: 'event';
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
   info: {
     description: '';
     displayName: '\u0421\u043E\u0431\u044B\u0442\u0438\u044F';
-    pluralName: 'event';
-    singularName: 'events';
+    pluralName: 'events';
+    singularName: 'event';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText &
+    content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
         {
           preset: 'defaultHtml';
         }
       >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     event_place: Schema.Attribute.Relation<
       'manyToOne',
       'api::place-event.place-event'
     >;
-    event_time: Schema.Attribute.DateTime & Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::events.events'
-    > &
-      Schema.Attribute.Private;
+    event_start: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
+    picture: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -488,6 +490,13 @@ export interface ApiNewNew extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     content_tag: Schema.Attribute.Relation<
       'manyToMany',
       'api::content-tags.content-tags'
@@ -497,21 +506,7 @@ export interface ApiNewNew extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::new.new'>;
-    news_content: Schema.Attribute.RichText &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    news_name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    news_picture: Schema.Attribute.Media<'files' | 'images'> &
+    name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -522,6 +517,13 @@ export interface ApiNewNew extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::news-tags.news-tags'
     >;
+    picture: Schema.Attribute.Media<'files' | 'images'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -626,14 +628,13 @@ export interface ApiPlaceEventPlaceEvent extends Struct.CollectionTypeSchema {
           preset: 'defaultHtml';
         }
       >;
-    event: Schema.Attribute.Relation<'oneToMany', 'api::events.events'>;
+    event: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::place-event.place-event'
     >;
     name: Schema.Attribute.String;
-    photos: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1185,7 +1186,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::content-tags.content-tags': ApiContentTagsContentTags;
-      'api::events.events': ApiEventsEvents;
+      'api::event.event': ApiEventEvent;
       'api::main-page-slide.main-page-slide': ApiMainPageSlideMainPageSlide;
       'api::new.new': ApiNewNew;
       'api::news-tags.news-tags': ApiNewsTagsNewsTags;

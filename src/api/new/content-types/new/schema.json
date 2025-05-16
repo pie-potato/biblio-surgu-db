@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "news_picture": {
+    "picture": {
       "type": "media",
       "multiple": false,
       "required": true,
@@ -30,17 +30,8 @@
         }
       }
     },
-    "news_name": {
+    "name": {
       "type": "string",
-      "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "news_content": {
-      "type": "richtext",
       "required": true,
       "pluginOptions": {
         "i18n": {
@@ -59,6 +50,13 @@
       "relation": "manyToMany",
       "target": "api::content-tags.content-tags",
       "inversedBy": "news"
+    },
+    "content": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     }
   }
 }

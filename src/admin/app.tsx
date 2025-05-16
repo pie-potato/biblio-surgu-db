@@ -4,8 +4,7 @@ import ru from '../translations/ru.json';
 export default {
   config: {
     locales: [
-      'ru',
-      'de'
+      'ru'
     ],
     translations: {
       ru: {

@@ -19,14 +19,6 @@
     "name": {
       "type": "string"
     },
-    "photos": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "description": {
       "type": "customField",
       "options": {
@@ -37,7 +29,7 @@
     "event": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::events.events",
+      "target": "api::event.event",
       "mappedBy": "event_place"
     }
   }
