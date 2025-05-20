@@ -4,7 +4,8 @@
   "info": {
     "singularName": "content-tags",
     "pluralName": "content-tag",
-    "displayName": "Теги контента"
+    "displayName": "Теги контента",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,6 +19,12 @@
       "relation": "manyToMany",
       "target": "api::new.new",
       "mappedBy": "content_tag"
+    },
+    "page": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::page.page",
+      "inversedBy": "content_tag"
     }
   }
 }

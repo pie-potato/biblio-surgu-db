@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "kontakties",
+  "info": {
+    "singularName": "kontakty",
+    "pluralName": "kontakties",
+    "displayName": "Контакты",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "page": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::page.page"
+    }
+  }
+}

@@ -19,7 +19,7 @@
     "name": {
       "type": "string"
     },
-    "selection": {
+    "section": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::section.section",
@@ -37,17 +37,23 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "parents_page": {
+    "parent": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::page.page",
-      "inversedBy": "children_pages"
+      "inversedBy": "children"
     },
-    "children_pages": {
+    "children": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::page.page",
-      "mappedBy": "parents_page"
+      "mappedBy": "parent"
+    },
+    "content_tag": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::content-tags.content-tags",
+      "mappedBy": "page"
     }
   }
 }

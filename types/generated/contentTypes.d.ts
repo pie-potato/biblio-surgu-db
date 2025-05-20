@@ -34,6 +34,10 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1;
       }> &
       Schema.Attribute.DefaultTo<''>;
+    encryptedKey: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
     expiresAt: Schema.Attribute.DateTime;
     lastUsedAt: Schema.Attribute.DateTime;
     lifespan: Schema.Attribute.BigInteger;
@@ -369,9 +373,49 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBecomeReaderBecomeReader extends Struct.SingleTypeSchema {
+  collectionName: 'become_readers';
+  info: {
+    description: '';
+    displayName: '\u041A\u0430\u043A \u0441\u0442\u0430\u0442\u044C \u0447\u0438\u0442\u0430\u0442\u0435\u043B\u0435\u043C';
+    pluralName: 'become-readers';
+    singularName: 'become-reader';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::become-reader.become-reader'
+    >;
+    page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'>;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiContentTagsContentTags extends Struct.CollectionTypeSchema {
   collectionName: 'content_tag';
   info: {
+    description: '';
     displayName: '\u0422\u0435\u0433\u0438 \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u0430';
     pluralName: 'content-tag';
     singularName: 'content-tags';
@@ -391,6 +435,7 @@ export interface ApiContentTagsContentTags extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     news: Schema.Attribute.Relation<'manyToMany', 'api::new.new'>;
+    page: Schema.Attribute.Relation<'manyToMany', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -441,32 +486,75 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiMainPageSlideMainPageSlide
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'main_page_slides';
+export interface ApiFindFind extends Struct.SingleTypeSchema {
+  collectionName: 'finds';
   info: {
-    displayName: '\u0421\u043B\u0430\u0439\u0434\u044B \u0433\u043B\u0430\u0432\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B';
-    pluralName: 'main-page-slides';
-    singularName: 'main-page-slide';
+    description: '';
+    displayName: '\u041A\u0430\u043A \u043D\u0430\u0441 \u043D\u0430\u0439\u0442\u0438';
+    pluralName: 'finds';
+    singularName: 'find';
   };
   options: {
     draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::find.find'>;
+    page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'>;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiKontaktyKontakty extends Struct.SingleTypeSchema {
+  collectionName: 'kontakties';
+  info: {
+    description: '';
+    displayName: '\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B';
+    pluralName: 'kontakties';
+    singularName: 'kontakty';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::main-page-slide.main-page-slide'
-    > &
-      Schema.Attribute.Private;
-    main_page_slide_picture: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    > &
-      Schema.Attribute.Required;
+      'api::kontakty.kontakty'
+    >;
+    page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -513,10 +601,6 @@ export interface ApiNewNew extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    news_tags: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::news-tags.news-tags'
-    >;
     picture: Schema.Attribute.Media<'files' | 'images'> &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
@@ -524,35 +608,6 @@ export interface ApiNewNew extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiNewsTagsNewsTags extends Struct.CollectionTypeSchema {
-  collectionName: 'news_tag';
-  info: {
-    displayName: '\u0422\u0435\u0433\u0438 \u043D\u043E\u0432\u043E\u0441\u0442\u0435\u0439';
-    pluralName: 'news-tag';
-    singularName: 'news-tags';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::news-tags.news-tags'
-    > &
-      Schema.Attribute.Private;
-    news: Schema.Attribute.Relation<'manyToMany', 'api::new.new'>;
-    news_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -577,7 +632,11 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    children_pages: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
+    children: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
+    content_tag: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::content-tags.content-tags'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -591,9 +650,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
           preset: 'defaultHtml';
         }
       >;
-    parents_page: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
-    selection: Schema.Attribute.Relation<'manyToOne', 'api::section.section'>;
+    section: Schema.Attribute.Relation<'manyToOne', 'api::section.section'>;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -669,7 +728,7 @@ export interface ApiSectionSection extends Struct.CollectionTypeSchema {
     >;
     page: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
-    section_name: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1185,11 +1244,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::become-reader.become-reader': ApiBecomeReaderBecomeReader;
       'api::content-tags.content-tags': ApiContentTagsContentTags;
       'api::event.event': ApiEventEvent;
-      'api::main-page-slide.main-page-slide': ApiMainPageSlideMainPageSlide;
+      'api::find.find': ApiFindFind;
+      'api::kontakty.kontakty': ApiKontaktyKontakty;
       'api::new.new': ApiNewNew;
-      'api::news-tags.news-tags': ApiNewsTagsNewsTags;
       'api::page.page': ApiPagePage;
       'api::place-event.place-event': ApiPlaceEventPlaceEvent;
       'api::section.section': ApiSectionSection;

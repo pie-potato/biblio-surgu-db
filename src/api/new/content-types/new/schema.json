@@ -39,12 +39,6 @@
         }
       }
     },
-    "news_tags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::news-tags.news-tags",
-      "inversedBy": "news"
-    },
     "content_tag": {
       "type": "relation",
       "relation": "manyToMany",
